@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Tourist Destinations</title>
+
+    <link rel="stylesheet"
+          href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<main>
+
+    <div class="grid-toolbar">
+
+        <h2>Tourist Destinations</h2>
+
+        <div class="buttons">
+
+            <a href="{% url 'add_destination' %}" id="addDestinationLink">
+                <button>Add Destination</button>
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="search-bar">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by place name or location..."
+        >
+
+        <button id="searchBtn">Search</button>
+
+        <button id="clearSearchBtn" class="btn-text">Clear</button>
+
+    </div>
+
+    <p id="loginNotice" class="hint" style="display:none;">
+        Login to like, comment, share, and see visitor information.
+    </p>
+
+    <div class="destination-grid" id="destinationGrid">
+    </div>
+
+</main>
+
+{% include 'footer.html' %}
+
+<script src="{% static 'js/destinations.js' %}">
+</script>
+
+</body>
+
+</html>

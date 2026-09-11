@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register</title>
+
+    <link rel="stylesheet"
+          href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<main class="centered">
+
+    <h2>Join the Community</h2>
+
+    <form id="registerForm" class="journal-form">
+
+        <label>Username</label>
+
+        <input
+            type="text"
+            id="username"
+            required
+        >
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            id="email"
+            required
+        >
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="password"
+            required
+        >
+
+        <label>Country</label>
+
+        <input
+            type="text"
+            id="country"
+            required
+        >
+
+        <label>State</label>
+
+        <input
+            type="text"
+            id="state"
+            required
+        >
+
+        <label>District</label>
+
+        <input
+            type="text"
+            id="district"
+            required
+        >
+
+        <button type="submit">
+            Register
+        </button>
+
+    </form>
+
+    <p class="form-footnote">
+        Already exploring with us?
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+
+</main>
+
+{% include 'footer.html' %}
+
+<script src="{% static 'js/register.js' %}">
+</script>
+
+</body>
+
+</html>

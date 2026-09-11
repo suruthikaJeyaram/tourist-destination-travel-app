@@ -1,0 +1,34 @@
+<footer class="site-footer">
+
+    <div class="footer-inner">
+
+        <div class="footer-col">
+            <h4>Tourist Destination</h4>
+            <p>A field journal for nature lovers &mdash;
+               discover, share and remember beautiful places.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:hello@touristdestinationapp@gmail.com">
+                touristdestinationapp@gmail.com
+            </a>
+            
+            <p>Bengaluru, Karnataka, India</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="{% url 'destinations' %}">Destinations</a>
+            <a href="{% url 'add_destination' %}">Add a Destination</a>
+            <a href="{% url 'register' %}">Join the Community</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        &copy; {% now "Y" %} Tourist Destination. Made for wanderers who
+        love the outdoors.
+    </div>
+
+</footer>

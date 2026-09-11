@@ -1,0 +1,108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Destination</title>
+
+    <link rel="stylesheet"
+          href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<main class="centered">
+
+    <h2>Add a Tourist Destination</h2>
+
+    <form id="destinationForm" class="journal-form" enctype="multipart/form-data">
+
+        <label>Place Name</label>
+
+        <input
+            type="text"
+            id="place_name"
+            required
+        >
+
+        <label>Weather</label>
+
+        <input
+            type="text"
+            id="weather"
+            required
+        >
+
+        <label>Location</label>
+
+        <input
+            type="text"
+            id="location"
+            required
+        >
+
+        <label>Google Map Link</label>
+
+        <input
+            type="url"
+            id="google_map_link"
+            required
+        >
+
+        <label>Description</label>
+
+        <textarea
+            id="description"
+            rows="4"
+            required
+        ></textarea>
+
+        <label>Visitor Information</label>
+
+        <textarea
+            id="visitor_info"
+            rows="3"
+            placeholder="Timings, entry fee, best time to visit..."
+        ></textarea>
+
+        <label>Photos</label>
+
+        <input
+            type="file"
+            id="photos"
+            accept="image/*"
+            multiple
+        >
+
+        <p class="hint">
+            You can select multiple photos at once.
+        </p>
+
+        <div class="photo-preview-strip" id="photoPreview"></div>
+
+        <button type="submit">
+            Save Destination
+        </button>
+
+    </form>
+
+</main>
+
+{% include 'footer.html' %}
+
+<script src="{% static 'js/add_destination.js' %}">
+</script>
+
+</body>
+
+</html>

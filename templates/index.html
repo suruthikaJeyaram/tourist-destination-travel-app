@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Tourist Destination</title>
+
+    <link rel="stylesheet"
+          href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+
+    <div class="hero-photo">
+
+        {% include 'navbar.html' %}
+
+        <main class="hero-inner">
+
+            <div class="hero-copy">
+
+                <h2>
+                    Discover beautiful places, one trail at a time
+                </h2>
+
+                <p>
+                    Browse tourist spots shared by fellow travellers &mdash;
+                    weather, visitor tips and Google Map links included.
+                    Add your own finds, and like, comment or share the
+                    ones you love.
+                </p>
+
+                <div class="buttons">
+
+                    <a href="{% url 'register' %}">
+                        <button>Join the Community</button>
+                    </a>
+
+                    <a href="{% url 'login' %}">
+                        <button class="btn-outline">Login</button>
+                    </a>
+
+                    <a href="{% url 'destinations' %}">
+                        <button class="btn-amber">View Destinations</button>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    {% include 'footer.html' %}
+
+</body>
+
+</html>

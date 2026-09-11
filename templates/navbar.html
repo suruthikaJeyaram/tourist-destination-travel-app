@@ -1,0 +1,53 @@
+<header class="site-header">
+
+    <h1>Tourist Destination</h1>
+
+    <p class="tagline">
+        A field journal for wanderers &amp; nature lovers
+    </p>
+
+</header>
+
+
+<nav class="site-nav">
+
+    <a href="{% url 'index' %}">
+        Home
+    </a>
+
+    <a href="{% url 'destinations' %}">
+        Destinations
+    </a>
+
+    <a href="{% url 'register' %}" id="navRegister">
+        Register
+    </a>
+
+    <a href="{% url 'login' %}" class="nav-cta" id="navLogin">
+        Login
+    </a>
+
+    <a href="#" class="nav-cta" id="navLogout" style="display:none;">
+        Logout
+    </a>
+
+</nav>
+
+<script>
+    // Reflect actual login state in the top nav, on every page.
+    (function () {
+        if (localStorage.getItem("token")) {
+            document.getElementById("navRegister").style.display = "none";
+            document.getElementById("navLogin").style.display = "none";
+            document.getElementById("navLogout").style.display = "inline-block";
+        }
+
+        var navLogout = document.getElementById("navLogout");
+
+        navLogout.addEventListener("click", function (e) {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            window.location.href = "/login/";
+        });
+    })();
+</script>
