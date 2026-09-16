@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = [ "Tourist_Destinations.onrender.com",]
+ALLOWED_HOSTS = [ "tourist-destination-app-pac2.onrender.com",]
 
 
 # Application definition
