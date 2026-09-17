@@ -20,14 +20,17 @@ class DestinationPhotoSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
 
     username = serializers.ReadOnlyField(source='user.username')
-
     can_modify = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
         fields = [
-            'id', 'destination', 'username', 'text',
-            'created_at', 'can_modify'
+            'id',
+            'destination',
+            'username',
+            'text',
+            'created_at',
+            'can_modify'
         ]
         read_only_fields = ['destination']
 
@@ -45,15 +48,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class DestinationsSerializer(serializers.ModelSerializer):
 
-    photos = DestinationPhotoSerializer(many=True, read_only=True)
-
-    uploaded_photos = serializers.ListField(
-        child=serializers.ImageField(),
-        write_only=True,
-        required=False
+    photos = DestinationPhotoSerializer(
+        many=True,
+        read_only=True
     )
 
-    owner_username = serializers.ReadOnlyField(source='owner.username')
+    owner_username = serializers.ReadOnlyField(
+        source='owner.username'
+    )
 
     is_owner = serializers.SerializerMethodField()
 
@@ -61,7 +63,10 @@ class DestinationsSerializer(serializers.ModelSerializer):
 
     liked_by_user = serializers.SerializerMethodField()
 
-    comments = CommentSerializer(many=True, read_only=True)
+    comments = CommentSerializer(
+        many=True,
+        read_only=True
+    )
 
     class Meta:
         model = Destinations
@@ -78,7 +83,6 @@ class DestinationsSerializer(serializers.ModelSerializer):
             'visitor_info',
             'created_at',
             'photos',
-            'uploaded_photos',
             'likes_count',
             'liked_by_user',
             'shares_count',
@@ -87,15 +91,17 @@ class DestinationsSerializer(serializers.ModelSerializer):
 
     def _is_logged_in(self):
         request = self.context.get('request')
-        return bool(request and request.user.is_authenticated)
+
+        return bool(
+            request and
+            request.user.is_authenticated
+        )
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
 
-        # Visitor information and comments are only shown to
-        # logged-in users. visitor_info stays a normal writable
-        # model field above so posting/editing it still works -
-        # this only affects what gets sent back in responses.
+        # Visitor information and comments are only shown
+        # to logged-in users.
         if not self._is_logged_in():
             data['visitor_info'] = None
             data['comments'] = []
@@ -118,36 +124,55 @@ class DestinationsSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
 
         if request and request.user.is_authenticated:
-            return obj.likes.filter(user=request.user).exists()
+            return obj.likes.filter(
+                user=request.user
+            ).exists()
 
         return False
 
     def create(self, validated_data):
-        photos = validated_data.pop('uploaded_photos', [])
 
-        destination = Destinations.objects.create(**validated_data)
+        request = self.context.get('request')
 
-        for photo in photos:
-            DestinationPhoto.objects.create(
-                destination=destination,
-                image=photo
+        destination = Destinations.objects.create(
+            **validated_data
+        )
+
+        # Get uploaded images directly from request.FILES
+        if request:
+            photos = request.FILES.getlist(
+                'uploaded_photos'
             )
+
+            for photo in photos:
+                DestinationPhoto.objects.create(
+                    destination=destination,
+                    image=photo
+                )
 
         return destination
 
     def update(self, instance, validated_data):
-        photos = validated_data.pop('uploaded_photos', [])
 
+        request = self.context.get('request')
+
+        # Update normal destination fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
 
         instance.save()
 
-        for photo in photos:
-            DestinationPhoto.objects.create(
-                destination=instance,
-                image=photo
+        # Add newly uploaded images
+        if request:
+            photos = request.FILES.getlist(
+                'uploaded_photos'
             )
+
+            for photo in photos:
+                DestinationPhoto.objects.create(
+                    destination=instance,
+                    image=photo
+                )
 
         return instance
 
@@ -163,7 +188,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = [
+            'id',
+            'username',
+            'email',
+            'password'
+        ]
 
         extra_kwargs = {
             'password': {
@@ -172,4 +202,6 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        return User.objects.create_user(
+            **validated_data
+        )

@@ -1,4 +1,5 @@
 from rest_framework import status, viewsets, filters
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import (
@@ -108,6 +109,11 @@ class DestinationViewSet(viewsets.ModelViewSet):
     )
     serializer_class = DestinationsSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    parser_classes = [
+        MultiPartParser,
+        FormParser,
+        JSONParser
+    ]
 
     filter_backends = [filters.SearchFilter]
     search_fields = ['place_name', 'location']
